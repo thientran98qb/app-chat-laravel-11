@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Project;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -10,3 +10,7 @@ Route::get('/', function () {
 Route::get('/demo', function () {
    return view('activity');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

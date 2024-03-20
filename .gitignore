@@ -3,6 +3,8 @@
 /public/build
 /public/hot
 /public/storage
+/public/css
+/public/js
 /storage/*.key
 /vendor
 .env
@@ -17,3 +19,21 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# ignore frontend built files
+/public/js/app.js
+/public/js/manifest.js
+/public/js/vendor.js
+/public/css/app.css
+/public/mix-manifest.json
+
+# Docker volumes
+db_mysql
+/public/mix-manifest.json
+
+# supervisord
+html
+supervisord.log
+supervisord.pid
+
+storage/certificates
