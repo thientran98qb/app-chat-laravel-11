@@ -68,6 +68,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 # Technology
 
 -   AlpineJS
--   Livewire
+-   Inertia
+-   VueJS
 -   EchoJs
 -   SocketIo
