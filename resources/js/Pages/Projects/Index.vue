@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { Link } from "@inertiajs/inertia-vue3";
 import PrimaryLayout from "../../Layouts/PrimaryLayout.vue";
 defineProps({

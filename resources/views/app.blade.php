@@ -16,7 +16,7 @@
 
     <!-- Scripts -->
     @routes
-    @vite('resources/js/app.js')
+    @vite(['resources/js/app.ts', "resources/js/Pages/{$page['component']}.vue"])
     @inertiaHead
 </head>
 
