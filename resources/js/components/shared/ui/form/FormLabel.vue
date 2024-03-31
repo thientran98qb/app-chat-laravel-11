@@ -2,20 +2,16 @@
 import type { HTMLAttributes } from "vue";
 import type { LabelProps } from "radix-vue";
 import { twMerge } from "tailwind-merge";
-import { useFormField } from "./useFormField";
 import { Label } from "../../../shared/ui/label";
 
-const props = defineProps<LabelProps & { class?: HTMLAttributes["class"] }>();
-
-const { error, formItemId } = useFormField();
+const props = defineProps<
+    LabelProps & { class?: HTMLAttributes["class"]; for: string }
+>();
 </script>
 
 <template>
     <!-- eslint-disable-next-line vuejs-accessibility/label-has-for -->
-    <Label
-        :class="twMerge(error && 'text-destructive', props.class)"
-        :for="formItemId"
-    >
+    <Label :class="twMerge(props.class)" :for="props.for">
         <slot />
     </Label>
 </template>

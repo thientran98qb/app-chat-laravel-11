@@ -8,7 +8,7 @@ export const inputVariants = cva(
         variants: {
             variant: {
                 default: "bg-background",
-                error: "bg-destructive",
+                error: "border-destructive",
             },
         },
         defaultVariants: {

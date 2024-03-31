@@ -20,7 +20,7 @@
     @inertiaHead
 </head>
 
-<body>
+<body class="!mb-0">
     @inertia
 </body>
 

@@ -1,16 +1,9 @@
 <script lang="ts" setup>
-import { ErrorMessage } from "vee-validate";
-import { toValue } from "vue";
-import { useFormField } from "./useFormField";
-
-const { name, formMessageId } = useFormField();
+const props = defineProps<{ error: string | undefined }>();
 </script>
 
 <template>
-    <ErrorMessage
-        :id="formMessageId"
-        :name="toValue(name)"
-        as="p"
-        class="text-sm font-medium text-destructive"
-    />
+    <div v-if="props.error" as="p" class="text-sm font-medium text-destructive">
+        {{ props.error }}
+    </div>
 </template>

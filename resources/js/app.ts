@@ -4,11 +4,10 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-import "./bootstrap";
 import "../css/app.css";
 
 import { createApp, DefineComponent, h } from "vue";
-import { createInertiaApp } from "@inertiajs/inertia-vue3";
+import { createInertiaApp, Link } from "@inertiajs/inertia-vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist";
 import { InertiaProgress } from "@inertiajs/progress";
@@ -31,6 +30,7 @@ createInertiaApp({
     setup({ el, app, props, plugin }) {
         createApp({ render: () => h(app, props) })
             .component("fa", FontAwesomeIcon)
+            .component("inertia-link", Link)
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .mount(el);
@@ -39,4 +39,4 @@ createInertiaApp({
 
 library.add(fas, far, fab);
 
-InertiaProgress.init({ color: "red", showSpinner: true });
+InertiaProgress.init({ color: "red", showSpinner: false });

@@ -1,26 +1,21 @@
 <script lang="ts" setup>
-import { ErrorMessage } from "vee-validate";
-import { toTypedSchema } from "@vee-validate/zod";
-import { z } from "zod";
-
 import {
-    Form,
-    FormField,
-    FormControl,
     FormItem,
     FormMessage,
     FormLabel,
 } from "../../components/shared/ui/form";
 
 import { Input } from "../../components/shared/ui/input";
+import { useForm } from "@inertiajs/inertia-vue3";
 
-const loginSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(6, "password must contain at least 6 characters"),
+const form = useForm({
+    email: "",
+    password: "",
+    remember: false,
 });
 
-function onSubmit(values) {
-    alert(JSON.stringify(values, null, 2));
+function onSubmit() {
+    form.post(route("login"));
 }
 </script>
 <template>
@@ -46,19 +41,18 @@ function onSubmit(values) {
             class="md:w-1/3 w-full h-fit md:h-screen bg-[#d9daf0] relative flex md:items-center justify-center"
         >
             <div
-                class="p-4 md:p-0 absolute md:-left-1/4 left-auto -top-2/4 md:top-auto"
+                class="p-4 md:p-0 absolute md:-left-1/4 left-auto -top-2/4 md:top-auto mr-0 md:mr-5"
             >
-                <Form
+                <form
                     data-testid="form-login"
-                    class="bg-white rounded-lg p-12"
-                    :validation-schema="toTypedSchema(loginSchema)"
-                    @submit="onSubmit"
+                    class="bg-white rounded-lg p-8"
+                    @submit.prevent="onSubmit"
                 >
-                    <div class="h-[230px] mb-2">
+                    <div class="h-[150px] mb-2 md:h-[130px]">
                         <img
                             src="/images/logo.png"
                             alt="logo"
-                            class="w-full h-full object-cover"
+                            class="w-full h-full object-contain"
                         />
                     </div>
                     <div class="my-6 space-y-1">
@@ -71,44 +65,55 @@ function onSubmit(values) {
                         </p>
                     </div>
                     <div class="space-y-3">
-                        <FormField v-slot="{ componentField }" name="email">
-                            <FormItem>
-                                <FormLabel class="uppercase text-sm font-medium"
-                                    >Email</FormLabel
-                                >
-                                <FormControl>
-                                    <Input
-                                        id="email"
-                                        data-testid="input-email"
-                                        type="text"
-                                        placeholder="Nhập địa chỉ email của bạn"
-                                        v-bind="componentField"
-                                    />
-                                </FormControl>
-                                <FormMessage id="email-error" />
-                            </FormItem>
-                        </FormField>
-                        <FormField v-slot="{ componentField }" name="password">
-                            <FormItem>
-                                <FormLabel class="uppercase text-sm font-medium"
-                                    >Mật khẩu</FormLabel
-                                >
-                                <FormControl>
-                                    <Input
-                                        id="password"
-                                        data-testid="input-password"
-                                        type="text"
-                                        placeholder="Nhập địa chỉ password của bạn"
-                                        v-bind="componentField"
-                                    />
-                                </FormControl>
-                                <FormMessage id="password-error" />
-                            </FormItem>
-                        </FormField>
+                        <FormItem>
+                            <FormLabel
+                                for="email"
+                                class="uppercase text-sm font-medium"
+                                >Email</FormLabel
+                            >
+                            <Input
+                                id="email"
+                                type="text"
+                                v-model="form.email"
+                                :variant="
+                                    form.errors.email ? 'error' : 'default'
+                                "
+                                placeholder="Nhập địa chỉ email của bạn"
+                            />
+                            <FormMessage
+                                id="email-error"
+                                :error="form.errors.email"
+                            />
+                        </FormItem>
+                        <FormItem>
+                            <FormLabel
+                                for="password"
+                                class="uppercase text-sm font-medium"
+                                >Mật khẩu</FormLabel
+                            >
+                            <Input
+                                id="password"
+                                type="password"
+                                v-model="form.password"
+                                :variant="
+                                    form.errors.password ? 'error' : 'default'
+                                "
+                                placeholder="Nhập địa chỉ password của bạn"
+                            />
+                            <FormMessage
+                                id="password-error"
+                                :error="form.errors.password"
+                            />
+                        </FormItem>
                         <div
                             class="text-xs font-medium flex items-center gap-2"
                         >
-                            <input type="checkbox" name="" id="remember_me" />
+                            <input
+                                type="checkbox"
+                                name="remember"
+                                id="remember_me"
+                                v-model="form.remember"
+                            />
                             <label
                                 for="remember_me"
                                 class="text-slate-700 cursor-pointer leading-[initial]"
@@ -116,6 +121,7 @@ function onSubmit(values) {
                             >
                         </div>
                         <button
+                            type="submit"
                             class="w-full hover:opacity-75 transition-all duration-300 bg-[#ef7215] text-white font-semibold rounded-lg py-2 text-xs"
                         >
                             Đăng nhập
@@ -151,7 +157,7 @@ function onSubmit(values) {
                             <fa :icon="['fab', 'twitter']" />
                         </div>
                     </div>
-                </Form>
+                </form>
             </div>
         </div>
     </div>
