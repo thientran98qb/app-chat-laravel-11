@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 if (!function_exists('fetch_static_attributes')) {
     function fetch_static_attributes($class, array $attributes)
     {
@@ -18,5 +20,27 @@ if (!function_exists('fetch_static_attributes')) {
         }
 
         return $results;
+    }
+}
+
+if (!function_exists('get_time_range')) {
+    function get_time_range(string $startTime, string $endTime)
+    {
+        $start = Carbon::parse($startTime);
+        $end = Carbon::parse($endTime);
+
+        $intervals = [];
+        $current = $start;
+
+        while ($current->lt($end)) {
+            $interval = [
+                $current->toTimeString(),
+                $current->addHours(2)->toTimeString()
+            ];
+
+            $intervals[] = $interval;
+        }
+
+        return $intervals;
     }
 }

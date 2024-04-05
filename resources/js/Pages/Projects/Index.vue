@@ -4,8 +4,6 @@ import PrimaryLayout from "../../Layouts/PrimaryLayout.vue";
 defineProps({
     projects: Object,
 });
-
-// console.log("123123123", projects);
 </script>
 
 <template>

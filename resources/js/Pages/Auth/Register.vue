@@ -9,13 +9,14 @@ import { Input } from "../../components/shared/ui/input";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 const form = useForm({
+    name: "",
     email: "",
     password: "",
-    remember: false,
+    password_confirmation: "",
 });
 
 function onSubmit() {
-    form.post(route("login"));
+    form.post(route("register"));
 }
 </script>
 <template>
@@ -45,7 +46,7 @@ function onSubmit() {
             >
                 <form
                     data-testid="form-login"
-                    class="bg-white rounded-lg p-8"
+                    class="bg-white rounded-lg p-5"
                     @submit.prevent="onSubmit"
                 >
                     <div class="h-[150px] mb-2 md:h-[130px]">
@@ -65,6 +66,26 @@ function onSubmit() {
                         </p>
                     </div>
                     <div class="space-y-3">
+                        <FormItem>
+                            <FormLabel
+                                for="name"
+                                class="uppercase text-sm font-medium"
+                                >Name</FormLabel
+                            >
+                            <Input
+                                id="name"
+                                type="text"
+                                v-model="form.name"
+                                :variant="
+                                    form.errors.name ? 'error' : 'default'
+                                "
+                                placeholder="Nhập tên của bạn"
+                            />
+                            <FormMessage
+                                id="name-error"
+                                :error="form.errors.name"
+                            />
+                        </FormItem>
                         <FormItem>
                             <FormLabel
                                 for="email"
@@ -95,6 +116,7 @@ function onSubmit() {
                                 id="password"
                                 type="password"
                                 v-model="form.password"
+                                autocomplete="new-password"
                                 :variant="
                                     form.errors.password ? 'error' : 'default'
                                 "
@@ -105,59 +127,45 @@ function onSubmit() {
                                 :error="form.errors.password"
                             />
                         </FormItem>
-                        <div
-                            class="text-xs font-medium flex items-center gap-2"
-                        >
-                            <input
-                                type="checkbox"
-                                name="remember"
-                                id="remember_me"
-                                v-model="form.remember"
-                            />
-                            <label
-                                for="remember_me"
-                                class="text-slate-700 cursor-pointer leading-[initial]"
-                                >Nhớ mật khẩu</label
+                        <FormItem>
+                            <FormLabel
+                                for="password"
+                                class="uppercase text-sm font-medium"
+                                >Nhập lại mật khẩu</FormLabel
                             >
-                        </div>
+                            <Input
+                                id="password_confirmation"
+                                type="password"
+                                v-model="form.password_confirmation"
+                                autocomplete="new-password"
+                                :variant="
+                                    form.errors.password_confirmation
+                                        ? 'error'
+                                        : 'default'
+                                "
+                                placeholder="Nhập lại password của bạn"
+                            />
+                            <FormMessage
+                                id="password_confirmation-error"
+                                :error="form.errors.password_confirmation"
+                            />
+                        </FormItem>
                         <button
                             type="submit"
                             class="w-full hover:opacity-75 transition-all duration-300 bg-[#ef7215] text-white font-semibold rounded-lg py-2 text-xs"
                         >
-                            Đăng nhập
+                            Đăng ký
                         </button>
                     </div>
                     <p class="text-xs text-center mt-4 text-slate-600">
-                        Nếu lần đầu tới website?
+                        Nếu đã có tài khoản
                         <inertia-link
-                            :href="route('register')"
+                            :href="route('login')"
                             method="get"
                             class="text-blue-900 no-underline hover:underline"
-                            >Tạo tài khoản</inertia-link
+                            >Đăng nhập</inertia-link
                         >
                     </p>
-                    <p
-                        class="text-center text-xs mt-5 text-slate-500 after:content-[''] after:absolute after:inset-y-2/4 after:bg-slate-300 after:h-[1px] after:w-[45%] before:content-[''] after:right-0 before:absolute before:bg-slate-300 before:left-0 before:h-[1px] before:inset-y-2/4 before:w-[45%] relative"
-                    >
-                        hoặc
-                    </p>
-                    <div class="flex justify-center items-center gap-3 mt-5">
-                        <div
-                            class="text-sm cursor-pointer hover:bg-[#365899] transition-opacity duration-500 ease-linear rounded-lg h-8 w-8 bg-slate-500 flex justify-center items-center text-white"
-                        >
-                            <fa :icon="['fab', 'facebook']" />
-                        </div>
-                        <div
-                            class="text-sm cursor-pointer hover:bg-[#EA4335] transition-opacity duration-500 ease-linear rounded-lg h-8 w-8 bg-slate-500 flex justify-center items-center text-white"
-                        >
-                            <fa :icon="['fab', 'google-plus-g']" />
-                        </div>
-                        <div
-                            class="text-sm cursor-pointer hover:bg-[#1DA1F2] transition-opacity duration-500 ease-linear rounded-lg h-8 w-8 bg-slate-500 flex justify-center items-center text-white"
-                        >
-                            <fa :icon="['fab', 'twitter']" />
-                        </div>
-                    </div>
                 </form>
             </div>
         </div>
